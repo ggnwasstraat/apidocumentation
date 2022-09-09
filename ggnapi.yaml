@@ -1,0 +1,369 @@
+info:
+  title: PHP-CRUD-API
+  version: 1.0.0
+x-logo:
+    url: "https://raw.githubusercontent.com/vyomsrivastava/redoc-ly/main/logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "Petstore logo"  
+openapi: 3.0.0
+servers:
+  - url: http://talend/api.php
+paths:
+  /records/dossiers:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/exclude'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/join'
+      tags:
+        - dossiers
+      operationId: list_dossiers
+      description: list dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/list-dossiers'
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/create-dossiers'
+      tags:
+        - dossiers
+      operationId: create_dossiers
+      description: create dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/pk_string'
+  /records/dossiers/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/pk'
+        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/exclude'
+        - $ref: '#/components/parameters/join'
+      tags:
+        - dossiers
+      operationId: read_dossiers
+      description: read dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/read-dossiers'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/pk'
+      requestBody:
+        $ref: '#/components/requestBodies/update-dossiers'
+      tags:
+        - dossiers
+      operationId: update_dossiers
+      description: update dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/rows_affected'
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/pk'
+      tags:
+        - dossiers
+      operationId: delete_dossiers
+      description: delete dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/rows_affected'
+    patch:
+      parameters:
+        - $ref: '#/components/parameters/pk'
+      requestBody:
+        $ref: '#/components/requestBodies/increment-dossiers'
+      tags:
+        - dossiers
+      operationId: increment_dossiers
+      description: increment dossiers
+      responses:
+        '200':
+          $ref: '#/components/responses/rows_affected'
+  /status/ping:
+    get:
+      tags:
+        - status
+      operationId: ping_status
+      description: Request API 'ping' status
+      responses:
+        '200':
+          $ref: '#/components/responses/ping-status'
+components:
+  responses:
+    pk_integer:
+      description: inserted primary key value (integer)
+      content:
+        application/json:
+          schema:
+            type: integer
+            format: int64
+    pk_string:
+      description: inserted primary key value (string)
+      content:
+        application/json:
+          schema:
+            type: string
+            format: uuid
+    rows_affected:
+      description: number of rows affected (integer)
+      content:
+        application/json:
+          schema:
+            type: integer
+            format: int64
+    list-dossiers:
+      description: list of dossiers records
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list-dossiers'
+    read-dossiers:
+      description: single dossiers record
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/read-dossiers'
+    ping-status:
+      description: ping status record
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ping-status'
+  schemas:
+    list-dossiers:
+      type: object
+      properties:
+        results:
+          type: integer
+          format: int64
+        records:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                pattern: ^-?[0-9]{1,19}$
+                x-primary-key: true
+                x-referenced: []
+              dossiernummer:
+                type: string
+                maxLength: 11
+                pattern: ^.{0,11}$
+              opdnummer:
+                type: string
+                maxLength: 8
+                pattern: ^.{0,8}$
+              status:
+                type: string
+                maxLength: 6
+                pattern: ^.{0,6}$
+              lopend:
+                type: integer
+                format: int32
+                pattern: ^-?[0-9]{1,10}$
+    create-dossiers:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          pattern: ^-?[0-9]{1,19}$
+          x-primary-key: true
+          x-referenced: []
+        dossiernummer:
+          type: string
+          maxLength: 11
+          pattern: ^.{0,11}$
+        opdnummer:
+          type: string
+          maxLength: 8
+          pattern: ^.{0,8}$
+        status:
+          type: string
+          maxLength: 6
+          pattern: ^.{0,6}$
+        lopend:
+          type: integer
+          format: int32
+          pattern: ^-?[0-9]{1,10}$
+    read-dossiers:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          pattern: ^-?[0-9]{1,19}$
+          x-primary-key: true
+          x-referenced: []
+        dossiernummer:
+          type: string
+          maxLength: 11
+          pattern: ^.{0,11}$
+        opdnummer:
+          type: string
+          maxLength: 8
+          pattern: ^.{0,8}$
+        status:
+          type: string
+          maxLength: 6
+          pattern: ^.{0,6}$
+        lopend:
+          type: integer
+          format: int32
+          pattern: ^-?[0-9]{1,10}$
+    update-dossiers:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          pattern: ^-?[0-9]{1,19}$
+          x-primary-key: true
+          x-referenced: []
+        dossiernummer:
+          type: string
+          maxLength: 11
+          pattern: ^.{0,11}$
+        opdnummer:
+          type: string
+          maxLength: 8
+          pattern: ^.{0,8}$
+        status:
+          type: string
+          maxLength: 6
+          pattern: ^.{0,6}$
+        lopend:
+          type: integer
+          format: int32
+          pattern: ^-?[0-9]{1,10}$
+    increment-dossiers:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          pattern: ^-?[0-9]{1,19}$
+          x-primary-key: true
+          x-referenced: []
+        dossiernummer:
+          type: string
+          maxLength: 11
+          pattern: ^.{0,11}$
+        opdnummer:
+          type: string
+          maxLength: 8
+          pattern: ^.{0,8}$
+        status:
+          type: string
+          maxLength: 6
+          pattern: ^.{0,6}$
+        lopend:
+          type: integer
+          format: int32
+          pattern: ^-?[0-9]{1,10}$
+    ping-status:
+      type: object
+      required:
+        - db
+        - cache
+      properties:
+        db:
+          type: integer
+          format: int64
+        cache:
+          type: integer
+          format: int64
+  requestBodies:
+    create-dossiers:
+      description: single dossiers record
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create-dossiers'
+    update-dossiers:
+      description: single dossiers record
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/update-dossiers'
+    increment-dossiers:
+      description: single dossiers record
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/increment-dossiers'
+  parameters:
+    pk:
+      name: id
+      in: path
+      schema:
+        type: string
+      description: primary key value
+      required: true
+    filter:
+      name: filter
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+      description: 'Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1'
+      required: false
+    include:
+      name: include
+      in: query
+      schema:
+        type: string
+      description: 'Columns you want to include in the output (comma separated). Example: posts.*,categories.name'
+      required: false
+    exclude:
+      name: exclude
+      in: query
+      schema:
+        type: string
+      description: 'Columns you want to exclude from the output (comma separated). Example: posts.content'
+      required: false
+    order:
+      name: order
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+      description: 'Column you want to sort on and the sort direction (comma separated). Example: id,desc'
+      required: false
+    size:
+      name: size
+      in: query
+      schema:
+        type: string
+      description: 'Maximum number of results (for top lists). Example: 10'
+      required: false
+    page:
+      name: page
+      in: query
+      schema:
+        type: string
+      description: 'Page number and page size (comma separated). Example: 1,10'
+      required: false
+    join:
+      name: join
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+      description: 'Paths (comma separated) to related entities that you want to include. Example: comments,users'
+      required: false
+tags:
+  - name: dossiers
+    description: dossiers operations
+  - name: status
+    description: status operations
