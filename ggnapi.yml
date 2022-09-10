@@ -1,7 +1,7 @@
 info:
   title: PHP-CRUD-API
   version: 1.0.0
-x-logo:
+  x-logo:
     url: "https://raw.githubusercontent.com/vyomsrivastava/redoc-ly/main/logo.png"
     backgroundColor: "#FFFFFF"
     altText: "Petstore logo"  
