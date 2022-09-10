@@ -2,7 +2,7 @@ info:
   title: PHP-CRUD-API
   version: 1.0.0
   x-logo:
-      url: "https://raw.githubusercontent.com/vyomsrivastava/redoc-ly/main/logo.png"
+      url: "https://github.com/ggnwasstraat/apidocumentation/raw/main/GGN%20logo%20met%20Aandacht%20Loont%20groot.png"
       backgroundColor: "#FFFFFF"
       altText: "Petstore logo"  
 openapi: 3.0.0
